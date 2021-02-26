@@ -10,7 +10,7 @@
     "name": "Landofcoder Team",
     "email": "landofcoder@gmail.com",
     "url": "https://landofcoder.com"
-  }
+  },
   "license": "MIT",
   "dependencies": {
     "@grpc/proto-loader": "^0.5.3",

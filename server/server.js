@@ -41,26 +41,40 @@ server.addService(customersProto.CustomerService.service, {
 		callback(null, { customers });
 	},
 	filterCustomers: (call, callback) => {
-		let customer = customers;
-
+		let foundCustomers = []
+		let convertedCustomers = []
+		let existCustomers = []
+		var customer = null
 		if(call.request.email){
-			customer = customer.find(n => n.email == call.request.email);
+			customer = customers.find(n => n.email == call.request.email )
+			foundCustomers.push(customer)
 		}
 		
 		if(call.request.phone){
-			customer = customer.find(n => n.phone == call.request.phone);
+			customer = customers.find(n => n.phone == call.request.phone )
+			foundCustomers.push(customer)
 		}
 
 		if(call.request.name){
-			customer = customer.find(n => n.name == call.request.name);
+			customer = customers.find(n => n.name == call.request.name )
+			foundCustomers.push(customer)
 		}
 
 		if(call.request.country){
-			customer = customer.find(n => n.country == call.request.country);
+			customer = customers.find(n => n.country == call.request.country )
+			foundCustomers.push(customer)
 		}
-		
-		if (customer) {
-			callback(null, customer);
+
+		if(foundCustomers){
+			foundCustomers.map(_customer => {
+				if(!existCustomers.includes(_customer.id)){
+					existCustomers.push(_customer.id)
+					convertedCustomers.push(_customer)
+				}
+			})
+		}
+		if (convertedCustomers) {
+			callback(null, { customers: convertedCustomers });
 		} else {
 			callback({
 				code: grpc.status.NOT_FOUND,
@@ -72,7 +86,7 @@ server.addService(customersProto.CustomerService.service, {
 		let customer = customers.find(n => n.id == call.request.id);
 
 		if (customer) {
-			callback(null, customer);
+			callback(null, customers);
 		} else {
 			callback({
 				code: grpc.status.NOT_FOUND,

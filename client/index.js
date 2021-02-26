@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
 	client.getAll(null, (err, data) => {
 		if (!err) {
+			console.log("All customers: ", data);
 			res.render("customers", {
 				results: data.customers
 			});
@@ -22,7 +23,7 @@ app.get("/", (req, res) => {
 	});
 });
 
-app.get("/filter", (req, res) => {
+app.post("/filter", (req, res) => {
 	client.filterCustomers({
 		name: req.body.name,
 		email: req.body.email,
@@ -30,6 +31,7 @@ app.get("/filter", (req, res) => {
 		country: req.body.country
 	}, (err, data) => {
 		if (!err) {
+			console.log("Found customers: ", data);
 			res.render("customers", {
 				results: data.customers
 			});

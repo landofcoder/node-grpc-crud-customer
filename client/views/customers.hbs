@@ -27,7 +27,25 @@
             <h2>Customer's List</h2>
             <p class="lead">Example of CRUD made with Node.js, Express, Handlebars and gRPC</p>
         </div>
-
+        <form id="filter-form" action="/filter" method="post">
+        <div class="row">
+            <div class="col-lg-3">
+                <input class="form-control" id="filterName" name="name" type="text" placeholder="Search By Name">
+            </div>
+            <div class="col-lg-3">
+                <input class="form-control" id="filterEmail" name="email" type="text" placeholder="Search By Email">
+            </div>
+            <div class="col-lg-3">
+                <input class="form-control" id="filterPhone" name="phone" type="text" placeholder="Search By Name">
+            </div>
+            <div class="col-lg-3">
+                <input class="form-control" id="filterCountry" name="country" type="text" placeholder="Search By Country">
+            </div>
+            <div class="col-lg-3">
+                <button type="submit" class="btn btn-info">Filter</button>
+            </div>
+        </div>
+        </form>
         <table class="table" id="customers_table">
             <thead>
                 <tr>
@@ -52,8 +70,15 @@
                     <td>{{ address }}</td>
                     <td>{{ country }}</td>
                     <td>
-                        <a href="javascript:void(0);" class="btn btn-sm edit logrocket" data-id="{{ id }}"
-                            data-name="{{ name }}" data-age="{{ age }}" data-address="{{ address }}">Edit</a>
+                        <a href="javascript:void(0);" class="btn btn-sm edit logrocket" 
+                        data-id="{{ id }}"
+                        data-name="{{ name }}"
+                        data-phone="{{ phone }}"
+                        data-email="{{ email }}"
+                        data-age="{{ age }}" 
+                        data-address="{{ address }}"
+                        data-country="{{ country }}" 
+                        >Edit</a>
                         <a href="javascript:void(0);" class="btn btn-sm btn-danger remove" data-id="{{ id }}">Remove</a>
                     </td>
                 </tr>
@@ -199,17 +224,24 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script>
+        function emailIsValid (email) {
+            if(!email) return false
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        }
         $(document).ready(function () {
             $('#customers_table').on('click', '.edit', function () {
                 $('#editCustomerModal').modal('show');
-
-                $('.customer_id').val($(this).data('id'));
-                $('.name').val($(this).data('name'));
-                $('.age').val($(this).data('age'));
-                $('.email').val($(this).data('email'));
-                $('.phone').val($(this).data('phone'));
-                $('.address').val($(this).data('address'));
-                $('.country').val($(this).data('country'));
+                if(emailIsValid($(this).data('email'))){
+                    $('.customer_id').val($(this).data('id'));
+                    $('.name').val($(this).data('name'));
+                    $('.age').val($(this).data('age'));
+                    $('.email').val($(this).data('email'));
+                    $('.phone').val($(this).data('phone'));
+                    $('.address').val($(this).data('address'));
+                    $('.country').val($(this).data('country'));
+                }else {
+                    alert("Email Address Is Not Valid!");
+                }
             }).on('click', '.remove', function () {
                 $('#removeCustomerModal').modal('show');
 

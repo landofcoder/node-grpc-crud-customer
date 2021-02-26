@@ -1,5 +1,7 @@
 # a CRUD with gRPC and Node, Express for example manage customer info
 
+![ gRPC](doc/grpc.png)
+
 ## gRPC
 gRPC is a modern, open source, high performance RPC framework that can run in any environment. It can efficiently connect services in and across data centers with pluggable support for load balancing, tracing, health checking and authentication.
 
