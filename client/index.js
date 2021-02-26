@@ -24,19 +24,23 @@ app.get("/", (req, res) => {
 });
 
 app.post("/filter", (req, res) => {
-	client.filterCustomers({
-		name: req.body.name,
-		email: req.body.email,
-		phone: req.body.phone,
-		country: req.body.country
-	}, (err, data) => {
-		if (!err) {
-			console.log("Found customers: ", data);
-			res.render("customers", {
-				results: data.customers
-			});
-		}
-	});
+	if(!req.body.name && !req.body.email && !req.body.phone && !req.body.country){
+		res.redirect("/");
+	}else {
+		client.filterCustomers({
+			name: req.body.name,
+			email: req.body.email,
+			phone: req.body.phone,
+			country: req.body.country
+		}, (err, data) => {
+			if (!err) {
+				console.log("Found customers: ", data);
+				res.render("customers", {
+					results: data.customers
+				});
+			}
+		});
+	}
 });
 
 app.post("/save", (req, res) => {
