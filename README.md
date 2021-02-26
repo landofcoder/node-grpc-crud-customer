@@ -22,3 +22,7 @@ In order to run this app, issue in separate command line windows:
 - Inside the /root folder: `npm start`
 
 Then, go to http://localhost:3000/ and test it out.
+
+## Demo Preview
+
+![ gRPC](doc/demo_preview.png)
