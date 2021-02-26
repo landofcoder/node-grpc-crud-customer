@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+service CustomerService {
+    rpc GetAll (Empty) returns (CustomerList) {}
+    rpc FilterCustomers (FilterInput) returns (CustomerList) {}
+    rpc Get (CustomerRequestId) returns (Customer) {}
+    rpc Insert (Customer) returns (Customer) {}
+    rpc Update (Customer) returns (Customer) {}
+    rpc Remove (CustomerRequestId) returns (Empty) {}
+}
+
+message Empty {}
+
+message FilterInput {
+    string email = 1;
+    string phone = 2;
+    string name = 3;
+    string country = 4;
+}
+
+message Customer {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    int32 age = 5;
+    string address = 6;
+    string country = 7;
+}
+
+message CustomerList {
+    repeated Customer customers = 1;
+}
+
+message CustomerRequestId {
+    string id = 1;
+}
